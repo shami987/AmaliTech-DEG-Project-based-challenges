@@ -24,3 +24,26 @@ export function updateNodePosition(id, x, y) {
   const node = getNodeById(id);
   if (node) { node.position.x = x; node.position.y = y; }
 }
+
+export function addNode(parentId, optionLabel) {
+  const parent = getNodeById(parentId);
+  const newId = String(Date.now());
+  const newNode = {
+    id: newId,
+    type: 'end',
+    text: 'New Node',
+    position: { x: parent.position.x + 260, y: parent.position.y + 180 },
+    options: [],
+  };
+  state.nodes.push(newNode);
+  parent.options.push({ label: optionLabel || 'New Option', nextId: newId });
+  return newId;
+}
+
+export function deleteNode(id) {
+  state.nodes = state.nodes.filter(n => n.id !== id);
+  state.nodes.forEach(n => {
+    n.options = n.options.filter(o => o.nextId !== id);
+  });
+  if (state.selectedId === id) state.selectedId = null;
+}

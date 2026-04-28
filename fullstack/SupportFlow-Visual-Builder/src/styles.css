@@ -177,6 +177,8 @@ body {
   flex-shrink: 0;
 }
 #edit-panel.open { display: flex; }
+#edit-panel { justify-content: flex-start; }
+#edit-panel > div:last-child { margin-top: auto; }
 
 #edit-panel h2 { font-size: 0.95rem; font-weight: 700; color: var(--text); }
 
