@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SupportFlow Builder</title>
-    </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SupportFlow Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
 <body>
-    <div id="root">
-        </div>
-    <script type="module" src="/src/main.js"></script>
+  <div id="toolbar">
+    <h1>⚡ SupportFlow Builder</h1>
+    <button class="btn btn-primary" id="btn-play">▶ Preview</button>
+  </div>
+
+  <div id="app">
+    <div id="canvas-wrap">
+      <div id="canvas">
+        <svg id="svg-layer"></svg>
+      </div>
+    </div>
+
+    <aside id="edit-panel"></aside>
+
+    <div id="preview-mode"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
