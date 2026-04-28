@@ -6,11 +6,11 @@ A visual decision tree editor for building and testing automated customer suppor
 
 ## Live Demo
 
-> [Add your deployment link here]
+https://amali-tech-deg-project-based-challe-mu.vercel.app/
 
 ## Design File
 
-> [Add your Figma/Penpot link here]
+https://www.figma.com/make/KkVBEqH1YphEuX0qBthQfD/Develop-Figma-Design?p=f&t=LvUKOHUpF8twtCN4-0&fullscreen=1
 
 ---
 
