@@ -1,111 +1,100 @@
-# SupportFlow-Visual-Builder
+# SupportFlow Visual Builder
 
-This challenge is designed to test your ability to bridge Computer Science fundamentals with Modern Frontend Engineering.
-
-## 1. Business Scenario & Context
-
-**Client:** SupportFlow AI
-**Industry:** Customer Support Automation (Chatbots)
-
-**The Problem:** SupportFlow helps companies build automated "Help Bots" (e.g., "Press 1 for Billing, 2 for Tech Support"). Currently, their configuration is done via a messy Excel spreadsheet. It is error-prone, hard to visualize, and frustrating for non-technical managers.
-
-**Your Role:** You are the new Frontend Engineer. The Product Manager wants a **Visual Decision Tree Editor** where users can see their conversation flow as a flowchart, edit the questions in real-time, and "test drive" the bot instantly.
+A visual decision tree editor for building and testing automated customer support conversation flows. Built with Vanilla JS and SVG — no graph libraries, no component frameworks.
 
 ---
 
-## 2. The Assignment Stages
+## Live Demo
 
-This is a **hybrid design/engineering challenge**. You are expected to demonstrate competence in both visual design logic and complex DOM manipulation.
+> [Add your deployment link here]
 
-### Phase 1: The Design System
+## Design File
 
-**Before writing code, you must design the visual language of the tool.**
-
-- **Deliverable:** A link to your design file (Figma, Penpot, or Sketch) or a PDF export of your design frames.
-- **Requirement:** Your design file must include a dedicated **"Design System" page** that defines:
-  - **Canvas**
-  - **Node Cards**
-  - **Connectors**
-  - **Color Semantics**
-
-### Phase 2: The Implementation
-
-**Build the "Flow Builder" using your design system.**
-
-- **Constraint 1 (Critical):** You **cannot** use Flowchart/Graph libraries like `react-flow`, `jsPlumb`, or `mermaid.js`. You must build the node rendering and line connection logic yourself to prove you understand DOM coordinates and SVG/Canvas drawing.
-- **Constraint 2:** Do not use component libraries like Material UI or Bootstrap. (Tailwind is allowed only if you use it to build custom components).
+> [Add your Figma/Penpot link here]
 
 ---
 
-## 3. User Stories & Acceptance Criteria
+## Features
 
-### Core Features (Required)
+### Visual Flow Canvas
+- Nodes are rendered absolutely on a dot-grid canvas using x/y coordinates from `flow_data.json`
+- Curved SVG bezier curves connect parent nodes to their children based on flow logic
+- Nodes are **draggable** — connectors update in real-time as you reposition them
+- Color-coded node types: `start` (blue), `question` (purple), `end` (teal)
 
-#### Story 1: The Visual Graph
+### Node Editor
+- Click any node to open the edit panel
+- Edit question text — canvas updates instantly (in-memory state, no database needed)
+- Edit option labels inline
+- Remove individual options with the ✕ button
 
-> "As a user, I want to see my conversation logic as a connected flowchart, not a list."
+### Preview / Runner Mode
+- Hit **▶ Preview** to switch from the flowchart editor to a live chat interface
+- The bot presents the start node's question with clickable answer buttons
+- Selecting an answer traverses the graph and shows the next node
+- A **Restart** button appears at leaf nodes (end of conversation)
+- Hit **✕ Stop Preview** to return to the editor
 
-- **AC 1:** The app renders "Nodes" (questions) based on the provided JSON data.
-- **AC 2:** The Nodes are positioned absolutely on the canvas (using the x/y coordinates provided in the JSON).
-- **AC 3:** Visual lines (SVG or HTML Canvas) connect a Parent Node to its Child Nodes based on the flow logic.
+### Wildcard Feature — Add & Delete Nodes
+The biggest pain point for a support manager is being locked into a fixed tree. The **Add Child Node** feature lets you grow the conversation flow directly from the editor panel without touching any JSON:
 
-#### Story 2: The Editor
+- Type an option label in the "Add Child Node" input and click **+ Add**
+- A new node is created on the canvas, connected to the current node, and immediately selected for editing
+- The **Delete** button removes any non-start node and automatically cleans up all connections pointing to it
 
-> "As a user, I need to update the text when our support policies change."
-
-- **AC 1:** Clicking a Node opens an "Edit Panel" or turns the card into an editable form.
-- **AC 2:** Users can edit the "Question Text" and the changes reflect immediately on the canvas.
-- **AC 3:** (Constraint) You do not need to save changes to a permanent database. Managing local state (in-memory) is sufficient.
-
-#### Story 3: The "Preview" Mode (The Runner)
-
-> "As a manager, I want to test the bot experience as if I were a real customer."
-
-- **AC 1:** A "Play" button toggles the UI from "Editor View" (Flowchart) to "Preview Mode" (Chat Interface).
-- **AC 2:** In Preview Mode, the app displays the Start Node's question.
-- **AC 3:** When the user selects an answer, the app traverses the graph to show the next node.
-- **AC 4:** Show a "Restart" button when a leaf node (end of conversation) is reached.
-
-### The "Wildcard" Feature (Required)
-
-#### Story 4: The Innovation Clause
-
-> "As a developer, I want to add one feature that makes this tool indispensable."
-
-- **Task:** Identify a missing feature that improves the _Editor_ experience.
-- **AC 1:** Implement **one** additional feature of your choice.
-- **AC 2:** In your README, explain _why_ you chose this feature and how it adds value to the business.
+This makes the tool self-sufficient — managers can build and modify entire conversation trees without engineering help, which is the core business value of the product.
 
 ---
 
-## 4. Technical Requirements
+## Tech Stack
 
-- **Data:** Use the `flow_data.json` file provided in this repo.
-- **Tech Stack:** React, Vue, Svelte, or Vanilla JS.
+| Concern | Choice |
+|---|---|
+| Language | Vanilla JavaScript (ES Modules) |
+| Styling | Custom CSS (no Bootstrap / MUI) |
+| Graph rendering | Hand-written SVG bezier curves |
+| Build / Dev server | Vite |
+| Fonts | Inter (Google Fonts) |
 
 ---
 
-## 5. Submission Instructions
+## Project Structure
 
-1.  **Fork** this repository.
-2.  Complete the code in your fork.
-3.  **Update the README:**
-    - **Delete** all the instructions in this file (the text you are reading now).
-    - **Replace** them with your own documentation.
-    - _Note: Do not append your docs to the end. The final README should look like a professional project documentation, not a homework assignment._
-4.  Submit your repo link via the [online](https://forms.cloud.microsoft/e/PrfSgKKQ0k) form.
+```
+├── src/
+│   ├── main.js       # App entry point, wires all modules together
+│   ├── store.js      # In-memory state (nodes, mode, selection)
+│   ├── canvas.js     # Node rendering, SVG connectors, drag logic
+│   ├── editor.js     # Edit panel — text, options, add/delete nodes
+│   ├── preview.js    # Chat runner mode
+│   └── styles.css    # Full design system (tokens, layout, components)
+├── flow_data.json    # Source conversation tree data
+└── index.html        # App shell
+```
 
-### ⚠️ CRITICAL: Pre-Submission Checklist
+---
 
-**STOP and review your work.** To be eligible for the Solution Defense interview, your submission **MUST** pass the following "Gatekeeper" checks.
+## Getting Started
 
-If any of the following are incorrect, your submission will be flagged as incomplete and you will **NOT** be invited for an interview.
+```bash
+# Install dependencies
+npm install
 
-1.  **Public Repository:** Is your GitHub repository set to **Public**? (Private links will be auto-rejected).
-2.  **Audit-Ready History:** Does your Git commit history show your progress over time? (Repositories with a single "Initial Commit" or "Upload files" containing the entire project will be **rejected as unverifiable**).
-3.  **Working Deployment:** Have you tested your live link in an **Incognito/Private** window to ensure it loads without errors?
-4.  **No Restricted Libraries:** Did you build your own components? (Submissions using **Bootstrap, Material UI, or Chakra UI** will be disqualified).
-5.  **Design File Access:** Is your Figma/Penpot link included and set to **"Anyone with the link can view"**?
-6.  **Documentation:** Have you deleted the original assignment text from the `README.md` and replaced it with your own project documentation?
+# Start dev server
+npm run dev
 
-> **By submitting your work, you acknowledge that failure to meet these criteria effectively ends your application process.**
+# Build for production
+npm run build
+```
+
+Open `http://localhost:5173` in your browser.
+
+---
+
+## Design Decisions
+
+**No graph libraries** — Node positions and SVG connector paths are computed directly from DOM coordinates. Each connector is a cubic bezier curve (`M x1 y1 C cx cy, cx cy, x2 y2`) calculated from the node's center-bottom to the child's center-top.
+
+**No component frameworks** — The UI is built with plain ES module functions. Each module owns one concern (store, canvas, editor, preview) and communicates through a shared `refresh()` callback, keeping the architecture simple and auditable.
+
+**Dark design system** — CSS custom properties define all colors, spacing, and shadows in one place (`styles.css`), making the visual language consistent and easy to update.

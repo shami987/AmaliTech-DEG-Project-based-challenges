@@ -78,6 +78,13 @@ body {
   overflow: hidden;
 }
 
+#editor-view {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+#editor-view.hidden { display: none; }
+
 /* ── Canvas ── */
 #canvas-wrap {
   flex: 1;

@@ -1,8 +1,7 @@
 import { getStartNode, getNodeById } from './store.js';
 
 export function initPreview() {
-  const preview = document.getElementById('preview-mode');
-  preview.innerHTML = `
+  document.getElementById('preview-mode').innerHTML = `
     <div id="chat-window">
       <div id="chat-header">SupportFlow Bot</div>
       <div id="chat-messages"></div>
@@ -12,26 +11,22 @@ export function initPreview() {
 }
 
 export function startPreview() {
-  const preview = document.getElementById('preview-mode');
-  preview.classList.add('open');
-  document.getElementById('app').querySelector('#canvas-wrap').style.display = 'none';
-  document.getElementById('edit-panel').style.display = 'none';
+  document.getElementById('editor-view').classList.add('hidden');
+  document.getElementById('preview-mode').classList.add('open');
 
   const messages = document.getElementById('chat-messages');
   const options = document.getElementById('chat-options');
   messages.innerHTML = '';
   options.innerHTML = '';
-
   showNode(getStartNode(), messages, options);
 }
 
 export function stopPreview() {
   document.getElementById('preview-mode').classList.remove('open');
-  document.getElementById('app').querySelector('#canvas-wrap').style.display = '';
+  document.getElementById('editor-view').classList.remove('hidden');
 }
 
 function showNode(node, messages, options) {
-  // Bot bubble
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble bot';
   bubble.textContent = node.text;
@@ -41,11 +36,10 @@ function showNode(node, messages, options) {
   options.innerHTML = '';
 
   if (!node.options.length) {
-    // Leaf node — show restart
     const btn = document.createElement('button');
     btn.className = 'btn btn-primary';
+    btn.style.margin = '0 auto';
     btn.textContent = '↺ Restart';
-    btn.style.alignSelf = 'center';
     btn.addEventListener('click', () => {
       messages.innerHTML = '';
       showNode(getStartNode(), messages, options);
@@ -59,13 +53,11 @@ function showNode(node, messages, options) {
     btn.className = 'chat-option-btn';
     btn.textContent = opt.label;
     btn.addEventListener('click', () => {
-      // User bubble
       const userBubble = document.createElement('div');
       userBubble.className = 'chat-bubble user';
       userBubble.textContent = opt.label;
       messages.appendChild(userBubble);
       options.innerHTML = '';
-
       const next = getNodeById(opt.nextId);
       if (next) setTimeout(() => showNode(next, messages, options), 400);
     });

@@ -19,31 +19,28 @@ function handleSelect(id) {
   openEditor(id, refresh);
 }
 
-// Deselect on canvas click
 document.getElementById('canvas-wrap').addEventListener('click', () => {
   setSelectedId(null);
   closeEditor();
   refresh();
 });
 
-// Play / Stop button
 document.getElementById('btn-play').addEventListener('click', () => {
+  const btn = document.getElementById('btn-play');
   if (getMode() === 'editor') {
     setMode('preview');
-    document.getElementById('btn-play').textContent = '✕ Stop Preview';
-    document.getElementById('btn-play').classList.replace('btn-primary', 'btn-danger');
+    btn.textContent = '✕ Stop Preview';
+    btn.classList.replace('btn-primary', 'btn-danger');
     startPreview();
   } else {
     setMode('editor');
-    document.getElementById('btn-play').textContent = '▶ Preview';
-    document.getElementById('btn-play').classList.replace('btn-danger', 'btn-primary');
+    btn.textContent = '▶ Preview';
+    btn.classList.replace('btn-danger', 'btn-primary');
     stopPreview();
-    document.getElementById('edit-panel').style.display = '';
     refresh();
   }
 });
 
-// Boot
 initCanvas(handleSelect);
 initEditor(refresh);
 initPreview();

@@ -1,7 +1,7 @@
-import flowData from '../flow_data.json' assert { type: 'json' };
+import flowData from '../flow_data.json';
 
 const state = {
-  nodes: flowData.nodes.map(n => ({ ...n, position: { ...n.position } })),
+  nodes: flowData.nodes.map(n => ({ ...n, options: n.options.map(o => ({ ...o })), position: { ...n.position } })),
   mode: 'editor',
   selectedId: null,
 };
